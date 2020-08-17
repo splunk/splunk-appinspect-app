@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@splunk/react-ui/Button';
 import { StyledContainer, StyledGreeting } from './AppInspectComponentStyles';
+import { StateProvider } from './state/store'
+import AppInspect from './pages/AppInspect';
 
 class AppInspectComponent extends Component {
     static propTypes = {
@@ -27,17 +29,23 @@ class AppInspectComponent extends Component {
                 : `You've clicked the button ${counter} time${counter > 1 ? 's' : ''}.`;
 
         return (
-            <StyledContainer>
-                <StyledGreeting>Hello, {name}!</StyledGreeting>
-                <div>{message}</div>
-                <Button
-                    label="Click here"
-                    appearance="primary"
-                    onClick={() => {
-                        this.setState({ counter: counter + 1 });
-                    }}
-                />
-            </StyledContainer>
+            <div>
+                <StyledContainer>
+                    <StyledGreeting>Hello, {name}!</StyledGreeting>
+                    <div>{message}</div>
+                    <Button
+                        label="Click here"
+                        appearance="primary"
+                        onClick={() => {
+                            this.setState({ counter: counter + 1 });
+                        }}
+                    />
+                </StyledContainer>
+
+                <StateProvider>
+                    <AppInspect />
+                </StateProvider>
+            </div>
         );
     }
 }
