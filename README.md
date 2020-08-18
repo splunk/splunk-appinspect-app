@@ -32,9 +32,9 @@ Running `yarn run setup` once is required to enable all other tasks. The command
 
 - Update node version:
 
-`brew update`
-`npm install -g n`
-`sudo n latest`
+* `brew update`
+* `npm install -g n`
+* `sudo n latest`
 
 - Link App to Splunk Home: `yarn run link:app`
 
