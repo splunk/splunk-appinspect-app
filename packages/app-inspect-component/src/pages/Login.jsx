@@ -7,7 +7,7 @@ import ControlGroup from '@splunk/react-ui/ControlGroup';
 import Text from '@splunk/react-ui/Text';
 import Button from '@splunk/react-ui/Button';
 import Message from '@splunk/react-ui/Message';
-
+import querystring from 'querystring';
 import axios from 'axios';
 
 export default function Login() {
@@ -20,18 +20,47 @@ export default function Login() {
 
     const [hasLoginError, setHasLoginError] = useState(false);
 
+    function getCookieValue(a) {
+        var b = document.cookie.match('(^|;)\\s*' + a + '\\s*=\\s*([^;]+)');
+        return b ? b.pop() : '';
+    }
+
+    // import { createRESTURL, createURL } from '@splunk/splunk-utils/url';
+    /*
+        fetchCreate(endpoint, params) {
+        return fetch(createRESTURL(endpoint, { 'app': app, owner: 'nobody' }, {}), {
+            ...defaultFetchInit,
+            method: 'POST',
+            body: querystring.encode({
+                output_mode: 'json',
+                ...params,
+            }),
+        });
+    };
+    */
+
     async function handleLogin() {
         setIsLoggingIn(true);
-        
+
         try {
             const URL = 'https://api.splunk.com/2.0/rest/login/splunk';
             let payload = `http://www`
-            let res = await axios.post('https://a9qx6015t1.execute-api.us-east-2.amazonaws.com/dev/login', {
-                username: username,
-                password: password
-            });
-            
-            let data = res.data.data;
+            const req = {
+                method: "post",
+                url: '/en-US/splunkd/__raw/services/splunklogin',
+                headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',                // does not work -- raw / form-data
+                        'X-Splunk-Form-Key' : getCookieValue('splunkweb_csrf_token_8000'),
+                        'X-Requested-With': 'XMLHttpRequest'},
+                data: querystring.encode({
+                    'username': username,
+                    'password': password })
+
+            };
+
+            let res = await axios(req);
+            console.log(res);
+            let data = res.data.result;  // res.data.data;
 
             dispatch({
                 type: 'UPDATE-TOKEN',
@@ -50,7 +79,7 @@ export default function Login() {
     function handleUsernameUpdate(e) {
         setUsername(e.target.value);
     }
-    
+
     function handlePasswordUpdate(e) {
         setPassword(e.target.value);
     }
