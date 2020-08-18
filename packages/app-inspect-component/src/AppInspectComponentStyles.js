@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { variable, mixin } from './themes';
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 
 const StyledContainer = styled.div`
     ${mixin('reset')('inline-block')};

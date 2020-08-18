@@ -30,18 +30,6 @@ class AppInspectComponent extends Component {
 
         return (
             <div>
-                <StyledContainer>
-                    <StyledGreeting>Hello, {name}!</StyledGreeting>
-                    <div>{message}</div>
-                    <Button
-                        label="Click here"
-                        appearance="primary"
-                        onClick={() => {
-                            this.setState({ counter: counter + 1 });
-                        }}
-                    />
-                </StyledContainer>
-
                 <StateProvider>
                     <AppInspect />
                 </StateProvider>
