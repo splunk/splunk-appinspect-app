@@ -5,7 +5,7 @@ import json
 import logging
 import uuid
 import requests
-
+import base64
 # splunk.persistconn.packet.PersistentServerConnectionProtocolException
 
 libpath = os.path.dirname(os.path.abspath(__file__))
@@ -61,8 +61,12 @@ class LoginPersistentHandler(PersistentServerConnectionApplication):
         response = self.handle_list(query_params, form_params, session_key)
 
         if _ERROR in response:
+            payload = json.dumps({
+                'result': response,
+                'request': request
+            })
             return json.dumps({
-                'payload': response,  # json.dumps(response)
+                'payload': payload,  # json.dumps(response)
                 'status': 500
             })
 
@@ -79,7 +83,7 @@ class LoginPersistentHandler(PersistentServerConnectionApplication):
         })
 
     def handle_list(self, query_params, form_params, session_key):
-        logging.info('handle list requested')
+        logging.debug('handle list requested')
         try:
             auth = (form_params['username'], form_params['password'])
             resp = requests.get('https://api.splunk.com/2.0/rest/login/splunk',
@@ -90,8 +94,9 @@ class LoginPersistentHandler(PersistentServerConnectionApplication):
                 try:
                     data = resp.json()
                     response_payload = data['data']
+                    return response_payload
                 except Exception as e:
-                    logging.info(e)
+                    logging.debug(e)
                     pass
         except Exception as e:
             return {'error': str(e)}
