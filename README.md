@@ -53,6 +53,19 @@ simultaneously. Commands can also be run from individual packages. This may be b
 
 For more granular control of development scripts, consider using [Lerna](https://github.com/lerna/lerna) directly.
 
+## Community
+
+Stay connected with other developers building on the Splunk platform.
+
+* [Issues and pull requests](https://github.com/splunk/splunk-appinspect-app/issues/)
+* [Community Slack](https://splunk-usergroups.slack.com/app_redirect?channel=fdse)
+* [Splunk Blogs](https://www.splunk.com/blog)
+* [Twitter](https://twitter.com/splunkdev)
+
+### Contributions
+
+If you would like to contribute to the AppInspect App, see [Contributing to Splunk](https://www.splunk.com/en_us/form/contributions.html). For additional guidelines, see [CONTRIBUTING](CONTRIBUTING.md). 
+
 
 ## Code Formatting
 
